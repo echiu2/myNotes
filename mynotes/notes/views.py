@@ -1,5 +1,8 @@
 from django.shortcuts import render, HttpResponse
+from .forms import createNote
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello, world. You're at the notes index.")
+    form = createNote()
+    context = {'form':form}
+    return render(request, 'notes/notes.html', context)
