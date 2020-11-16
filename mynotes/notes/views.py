@@ -26,9 +26,14 @@ def index(request):
     # Instance of form
     form = createNote()
     context = {'form':form}
-    return render(request, 'notes/notes.html', context)
+    return render(request, 'notes/add_notes.html', context)
 
 def note_list(request):
     list_notes = Note.objects.all()
     context = {'list_notes': list_notes}
     return render(request, 'notes/note_list.html', context)
+
+def note_content(request, pk):
+    note = Note.objects.get(id=pk)
+    context = {'note': note}
+    return render(request, 'notes/note.html', context)

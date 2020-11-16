@@ -1,0 +1,21 @@
+{% extends "notes/header.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <h2 >{{ note.subject_text }}</h2>
+        <p class="card-text">{{ note.note_field }} </p>
+        <p>Posted on: {{ note.added_date }} </p>
+    </div>
+</body>
+</html>
+
+{% endblock %}
