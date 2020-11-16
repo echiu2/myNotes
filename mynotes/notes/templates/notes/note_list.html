@@ -1,3 +1,4 @@
+{% extends "notes/header.html" %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -11,12 +12,21 @@
 </head>
 <body>
     <div class="container-fluid">
-        <h2 class="account-heading">Welcome to my Note App!</h2>
         <h3>List of Notes:</h3>
         {% for note in list_notes %}
-            <p>Subject Text: {{ note.subject_text }}</p>
-            <p>Date Added: {{ note.added_date }}</p>
-            <p>Note: {{ note.note_field }}</p>
+        <!-- <div class="container-fluid"> -->
+            <div class="card" style="background-color: #e3f2fd;">
+                <div class="card-header">
+                    <h2 class="card-title">{{ note.subject_text }}</h2>
+                </div>
+                <div class="card-body">
+                <p class="card-text">{{ note.note_field }} </p>
+                <div class="card-footer">Posted on: {{ note.added_date }}
+                </div>
+                </div>
+            </div>
+            <br>
+        <!-- </div> -->
         {% endfor %}
     </div>  
 </body>

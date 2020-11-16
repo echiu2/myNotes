@@ -1,3 +1,4 @@
+{% extends "notes/header.html" %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -11,7 +12,6 @@
 </head>
 <body>
     <div class="container-fluid">
-        <h2 class="account-heading">Welcome to my Note App!</h2>
         <h3>Create Note:</h3>
         <form class="account" action="/" method="POST">
             {% csrf_token %}
