@@ -8,4 +8,6 @@ class Note(models.Model):
     added_date = models.DateTimeField(default=datetime.now, blank=True)
     note_field = models.TextField("My field label", null=False, blank=False, max_length=1000)
 
+    def __str__(self):
+        return self.subject_text
 

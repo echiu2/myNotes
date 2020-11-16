@@ -1,0 +1,25 @@
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <h2 class="account-heading">Welcome to my Note App!</h2>
+        <h3>List of Notes:</h3>
+        {% for note in list_notes %}
+            <p>Subject Text: {{ note.subject_text }}</p>
+            <p>Date Added: {{ note.added_date }}</p>
+            <p>Note: {{ note.note_field }}</p>
+        {% endfor %}
+    </div>  
+</body>
+</html>
+
+{% endblock %}

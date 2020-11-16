@@ -20,9 +20,15 @@ def index(request):
         date = request.POST["date"]
         note = request.POST["note"]
         note = Note(subject_text=title, added_date=date, note_field=note)
+        #saves notes into database
         note.save()
 
     # Instance of form
     form = createNote()
     context = {'form':form}
     return render(request, 'notes/notes.html', context)
+
+def note_list(request):
+    list_notes = Note.objects.all()
+    context = {'list_notes': list_notes}
+    return render(request, 'notes/note_list.html', context)
