@@ -14,6 +14,9 @@
         <h2 >{{ note.subject_text }}</h2>
         <p class="card-text">{{ note.note_field }} </p>
         <p>Posted on: {{ note.added_date }} </p>
+        <a class="btn btn-primary" href="{% url 'update_note' note.id %}">Edit</a>
+        <!-- <a class="btn btn-danger" href="{% url 'update_note' note.id %}">Delete</a> -->
+
     </div>
 </body>
 </html>

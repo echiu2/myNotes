@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Note
 import datetime
 
-class createNote(forms.ModelForm):
+class createNoteForm(forms.ModelForm):
     class Meta:
         model = Note
         fields = ['title', 'date', 'note']
@@ -15,3 +15,4 @@ class createNote(forms.ModelForm):
             'class':'form-control',
         }
     ))
+
