@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect
+from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
 from .forms import createNoteForm
 from django.contrib import messages
 from .models import Note
@@ -7,22 +7,11 @@ from datetime import datetime
 # Create your views here.
 def index(request):
     # Used for submission: Check if request was performed using HTTP:"Post" -> if so, create form
-    success = False
     if request.method == "POST":
-        form = createNoteForm(request.POST)
+        form = createNoteForm(request.POST or None)
         if form.is_valid():
-            success = True
             # saves a new post instance from Note data
-            # form.save()
-
-    if success:
-        messages.success(request, f'You have added a new note.')
-        title = request.POST["title"]
-        date = request.POST["date"]
-        note = request.POST["note"]
-        note = Note(subject_text=title, added_date=date, note_field=note)
-        #saves notes into database
-        note.save()
+            form.save()
 
     # Instance of form
     form = createNoteForm()
@@ -39,22 +28,23 @@ def note_content(request, pk):
     context = {'note': note}
     return render(request, 'notes/note.html', context)
 
-def update_note(request, pk):
-    note = Note.objects.get(id=pk)
+def update_note(request, pk=None):
+    # Query Note object with the parameter pk (primary key)
+    # note = Note.objects.get(id=pk)
+    note = get_object_or_404(Note, id=pk)
     #This is to get form of the note instance with data prefilled into the form 
     # (so more like an updateNote form)
     if request.method == "POST":
-        form = createNoteForm(request.POST, instance=note)
+        # To update, pass instance of that existing note into the noteForm with the request
+        form = createNoteForm(request.POST or None, instance=note)
         if form.is_valid():
             # update values
-            note.subject_text = form.cleaned_data['title']
-            note.added_date = form.cleaned_data['date']
-            note.note_field = form.cleaned_data['note']
+            note = form.save(commit=False)
             note.save()
             return redirect('/notes')
     else:
-        data = {'title': note.subject_text, 'date': datetime.now(), 'note': note.note_field}
-        form = createNoteForm(initial=data, instance=note)
+        # data = {'title': note.subject_text, 'date': datetime.now(), 'note': note.note_field}
+        form = createNoteForm(instance=note)
 
     context = {'form': form, 'note': note}
     return render(request, 'notes/update_notes.html', context)

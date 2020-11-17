@@ -6,13 +6,13 @@ import datetime
 class createNoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = ['title', 'date', 'note']
+        fields = ['subject_text', 'added_date', 'note_field']
 
-    title = forms.CharField(max_length=100)
-    date = forms.DateTimeField(initial=datetime.datetime.now())
-    note = forms.CharField(max_length= 1000, widget=forms.Textarea(
-        attrs={
-            'class':'form-control',
-        }
-    ))
+    # title = forms.CharField(max_length=100)
+    # date = forms.DateTimeField(initial=datetime.datetime.now())
+    # note = forms.CharField(max_length= 1000, widget=forms.Textarea(
+    #     attrs={
+    #         'class':'form-control',
+    #     }
+    # ))
 
