@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
+from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404, reverse
 from .forms import createNoteForm
 from django.contrib import messages
 from .models import Note
@@ -8,7 +8,7 @@ from datetime import datetime
 def index(request):
     # Used for submission: Check if request was performed using HTTP:"Post" -> if so, create form
     if request.method == "POST":
-        form = createNoteForm(request.POST or None)
+        form = createNoteForm(request.POST)
         if form.is_valid():
             # saves a new post instance from Note data
             form.save()
@@ -36,12 +36,12 @@ def update_note(request, pk=None):
     # (so more like an updateNote form)
     if request.method == "POST":
         # To update, pass instance of that existing note into the noteForm with the request
-        form = createNoteForm(request.POST or None, instance=note)
+        form = createNoteForm(request.POST, instance=note)
         if form.is_valid():
             # update values
             note = form.save(commit=False)
             note.save()
-            return redirect('/notes')
+            return HttpResponseRedirect(reverse('note_content', args=(pk,)))
     else:
         # data = {'title': note.subject_text, 'date': datetime.now(), 'note': note.note_field}
         form = createNoteForm(instance=note)
