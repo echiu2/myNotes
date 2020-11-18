@@ -3,6 +3,7 @@ from .forms import createNoteForm
 from django.contrib import messages
 from .models import Note
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
