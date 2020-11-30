@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
-@login_required
+@login_required(login_url="/login/")
 def index(request):
     # Used for submission: Check if request was performed using HTTP:"Post" -> if so, create form
     if request.method == "POST":
