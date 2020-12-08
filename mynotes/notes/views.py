@@ -21,16 +21,19 @@ def index(request):
     context = {'form':form}
     return render(request, 'notes/add_notes.html', context)
 
+@login_required(login_url="/login/")
 def note_list(request):
     list_notes = Note.objects.all()
     context = {'list_notes': list_notes}
     return render(request, 'notes/note_list.html', context)
 
+@login_required(login_url="/login/")
 def note_content(request, pk):
     note = Note.objects.get(id=pk)
     context = {'note': note}
     return render(request, 'notes/note.html', context)
 
+@login_required(login_url="/login/")
 def update_note(request, pk=None):
     # Query Note object with the parameter pk (primary key)
     # note = Note.objects.get(id=pk)

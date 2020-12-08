@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.conf import settings
 from .forms import signupForm, loginForm
 
 # Create your views here.
@@ -35,3 +36,7 @@ def login_user(request):
 
     context = {'form': form}
     return render(request, 'users/login.html', context)
+
+def logout_user(request):
+    logout(request)
+    return redirect(settings.LOGOUT_REDIRECT_URL)

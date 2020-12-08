@@ -17,9 +17,15 @@
             <a class="navbar-brand" style="color: white;" href="/"><h2>NoteKeeper</h2></a>	
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                  <a class="nav-link" style="color: white;" href="/notes">My Notes</a>
+                  <a class="nav-link" style="color: white;" href="{% url 'note_list' %}">My Notes</a>
                 </li>
-              </ul>
+                <li class="nav-item">
+                  <a class="nav-link" style="color: white;">Welcome, {{ user.get_full_name }}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" style="color: white;" href="{% url 'logout_user' %}">Logout</a>
+                </li>
+            </ul>
         </nav>
     </div> 	
     <div class='container-fluid'>
