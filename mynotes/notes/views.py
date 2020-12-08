@@ -29,6 +29,12 @@ def note_list(request):
 
 @login_required(login_url="/login/")
 def note_content(request, pk):
+    if request.method == "POST":
+        print('yes')
+        note = Note.objects.get(id=pk)
+        note.delete()
+        return redirect('/notes')
+        
     note = Note.objects.get(id=pk)
     context = {'note': note}
     return render(request, 'notes/note.html', context)

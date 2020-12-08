@@ -12,20 +12,15 @@
 <body>
     <div class="container-fluid">
         <h3>List of Notes:</h3>
-        {% for note in list_notes %}
-        <!-- <div class="container-fluid"> -->
+            {% for note in list_notes %}
             <div class="card" style="background-color: #e3f2fd; width: 18rem;">
                 <div class="card-header">
-                    <h2 class="card-title"><a href="{% url 'note_content' note.id %}">{{ note.subject_text }}</a></h2>
+                    <h2 class="card-title">
+                        <a href="{% url 'note_content' note.id %}">{{ note.subject_text }}</a>
+                    </h2>
                 </div>
-                <!-- <div class="card-body"> -->
-                <!-- <p class="card-text">{{ note.note_field }} </p> -->
-                <!-- <div class="card-footer">Posted on: {{ note.added_date }} -->
-                <!-- </div> -->
-                </div>
-            <!-- </div> -->
+            </div>
             <br>
-        <!-- </div> -->
         {% endfor %}
     </div>  
 </body>

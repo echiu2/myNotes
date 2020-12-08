@@ -15,7 +15,10 @@
         <p class="card-text">{{ note.note_field }} </p>
         <p>Posted on: {{ note.added_date }} </p>
         <a class="btn btn-primary" href="{% url 'update_note' note.id %}">Edit</a>
-        <!-- <a class="btn btn-danger" href="{% url 'update_note' note.id %}">Delete</a> -->
+        <form action="{% url 'note_content' note.id %}"method="POST">
+        {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
 
     </div>
 </body>
