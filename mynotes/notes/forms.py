@@ -11,4 +11,8 @@ class createNoteForm(forms.ModelForm):
             'added_date': ('Date'),
             'note_field': ('Note')
         }
+        widgets = {
+            'note_field': forms.Textarea(
+                attrs={'placeholder': 'Enter description here'}),
+        }
 

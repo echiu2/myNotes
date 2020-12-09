@@ -60,3 +60,7 @@ def update_note(request, pk=None):
 
     context = {'form': form, 'note': note}
     return render(request, 'notes/update_notes.html', context)
+
+# @login_required(login_url="/login/")
+# def sub_notes(request):
+#     return render(request, 'notes/sub_notes.html')
