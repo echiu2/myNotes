@@ -17,17 +17,13 @@
         <p>Posted on: {{ note.added_date }} </p>
         <a class="btn btn-primary" href="{% url 'update_note' note.id %}">Edit</a>
         <form action="{% url 'note_content' note.id %}" method="POST">
-        {% csrf_token %}
-            <br>
-            <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-        <form action="/" method="POST">
             {% csrf_token %}
             {{ form|crispy }}
             <br>
-            <button type="submit" class="btn btn-success">Create note</button>
+            <button type="submit" name="delete_note" class="btn btn-danger">Delete</button>
         </form>
-
+        <br>
+        <a class="btn btn-success" href="{% url 'create_subNote' note.id %}">Create note</a>
     </div>
 </body>
 </html>

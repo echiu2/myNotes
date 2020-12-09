@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404, reverse
-from .forms import createNoteForm
+from .forms import createNoteForm, subNoteForm
 from django.contrib import messages
 from .models import Note
 from datetime import datetime
@@ -40,6 +40,12 @@ def note_content(request, pk):
     return render(request, 'notes/note.html', context)
 
 @login_required(login_url="/login/")
+def create_subNote(request, pk=None):
+    form = subNoteForm()
+    context = {'form':form}
+    return render(request, 'notes/create_subNote.html', context)
+
+@login_required(login_url="/login/")
 def update_note(request, pk=None):
     # Query Note object with the parameter pk (primary key)
     # note = Note.objects.get(id=pk)
@@ -61,6 +67,3 @@ def update_note(request, pk=None):
     context = {'form': form, 'note': note}
     return render(request, 'notes/update_notes.html', context)
 
-# @login_required(login_url="/login/")
-# def sub_notes(request):
-#     return render(request, 'notes/sub_notes.html')
