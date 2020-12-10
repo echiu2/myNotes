@@ -19,7 +19,8 @@ class createNoteForm(forms.ModelForm):
 class subNoteForm(forms.ModelForm):
     class Meta:
         model = sub_Note
-        fields = ['subject_text', 'added_date', 'note_field']
+        fields = '__all__'
+        # fields = ['subject_text', 'added_date', 'note_field']
         labels = {
             'subject_text': ('Title'),
             'added_date': ('Date'),
@@ -29,5 +30,9 @@ class subNoteForm(forms.ModelForm):
             'note_field': forms.Textarea(
                 attrs={'placeholder': 'Enter description here'}),
         }
+
+    def __init__(self, *args, **kwargs):
+            super(subNoteForm, self).__init__(*args, **kwargs)
+            self.fields['note'].disabled = True
 
 

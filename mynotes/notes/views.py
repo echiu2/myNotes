@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404, reverse
 from .forms import createNoteForm, subNoteForm
 from django.contrib import messages
-from .models import Note
+from .models import Note, sub_Note
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -36,13 +36,22 @@ def note_content(request, pk):
         return redirect('/notes')
         
     note = Note.objects.get(id=pk)
-    context = {'note': note}
+    #query all sub notes related to Note through foreign key relationships 
+    sub_note = note.sub_note_set.all()
+    context = {'note': note, 'sub_note': sub_note}
     return render(request, 'notes/note.html', context)
 
 @login_required(login_url="/login/")
-def create_subNote(request, pk=None):
-    form = subNoteForm()
-    context = {'form':form}
+def create_subNote(request, pk=None):  
+    note = get_object_or_404(Note, id=pk)
+    if request.method == "POST":
+        form = subNoteForm(request.POST or None, initial={'note':note})   
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('note_content', args=(pk,)))
+
+    form = subNoteForm(request.POST or None, initial={'note':note})
+    context = {'form': form, 'note': note}
     return render(request, 'notes/create_subNote.html', context)
 
 @login_required(login_url="/login/")

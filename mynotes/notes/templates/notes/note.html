@@ -11,19 +11,34 @@
     <title>Notes</title>
 </head>
 <body>
-    <div class="container-fluid">
-        <h2 >{{ note.subject_text }}</h2>
-        <p class="card-text">{{ note.note_field }} </p>
-        <p>Posted on: {{ note.added_date }} </p>
-        <a class="btn btn-primary" href="{% url 'update_note' note.id %}">Edit</a>
-        <form action="{% url 'note_content' note.id %}" method="POST">
-            {% csrf_token %}
-            {{ form|crispy }}
+    <div class="container-fluid row">
+        <div class="col-sm-4">
+            <h2 >{{ note.subject_text }}</h2>
+            <p class="card-text">{{ note.note_field }} </p>
+            <p>Posted on: {{ note.added_date }} </p>
+            <div class="row container-fluid">
+                <a class="btn btn-primary" href="{% url 'update_note' note.id %}">Edit</a>
+                <form action="{% url 'note_content' note.id %}" method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" name="delete_note" class="btn btn-danger">Delete</button>
+                </form>
+                <a class="btn btn-success" href="{% url 'create_subNote' note.id %}">Create note</a>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            {% for note in sub_note %}
+            <div class="card" style="background-color: #e3f2fd; width: 18rem;">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <a href="#">{{ note.subject_text }}</a>
+                    </h2>
+                </div>
+            </div>
             <br>
-            <button type="submit" name="delete_note" class="btn btn-danger">Delete</button>
-        </form>
-        <br>
-        <a class="btn btn-success" href="{% url 'create_subNote' note.id %}">Create note</a>
+            {% endfor %}
+        </div>
+
     </div>
 </body>
 </html>
