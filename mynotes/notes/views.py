@@ -55,8 +55,7 @@ def create_subNote(request, pk=None):
     return render(request, 'notes/create_subNote.html', context)
 
 @login_required(login_url="/login/")
-def subNote_content(request, pk=None,pk2=None):
-    note = Note.objects.get(id=pk)
+def subNote_content(request, pk=None, pk2=None):
     subNote = sub_Note.objects.get(id=pk2)
     context = {'subNote': subNote}
     return render(request, 'notes/subNote.html', context)

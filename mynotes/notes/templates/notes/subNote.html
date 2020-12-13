@@ -11,8 +11,10 @@
     <title>Notes</title>
 </head>
 <body>
-    <div class="container-fluid row">
-        <p>content</p>
+    <div class="container-fluid">
+        <h2 >{{ subNote.subject_text }}</h2>
+        <p class="card-text">{{ subNote.note_field }} </p>
+        <p>Posted on: {{ subNote.added_date }} </p>
     </div>
 </body>
 </html>
