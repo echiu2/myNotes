@@ -55,6 +55,13 @@ def create_subNote(request, pk=None):
     return render(request, 'notes/create_subNote.html', context)
 
 @login_required(login_url="/login/")
+def subNote_content(request, pk=None,pk2=None):
+    note = Note.objects.get(id=pk)
+    subNote = sub_Note.objects.get(id=pk2)
+    context = {'subNote': subNote}
+    return render(request, 'notes/subNote.html', context)
+
+@login_required(login_url="/login/")
 def update_note(request, pk=None):
     # Query Note object with the parameter pk (primary key)
     # note = Note.objects.get(id=pk)
@@ -75,4 +82,6 @@ def update_note(request, pk=None):
 
     context = {'form': form, 'note': note}
     return render(request, 'notes/update_notes.html', context)
+
+
 

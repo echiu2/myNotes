@@ -27,11 +27,12 @@
             </div>
         </div>
         <div class="col-sm-8">
-            {% for note in sub_note %}
+            <h2>Notes:</h2>
+            {% for subnote in sub_note %}
             <div class="card" style="background-color: #e3f2fd; width: 18rem;">
                 <div class="card-header">
                     <h2 class="card-title">
-                        <a href="#">{{ note.subject_text }}</a>
+                        <a href="{% url 'subNote_content' note.id subnote.id %}">{{ subnote.subject_text }}</a>
                     </h2>
                 </div>
             </div>
