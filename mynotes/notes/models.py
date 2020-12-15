@@ -18,11 +18,11 @@ class Note(models.Model):
     def get_absolute_url(self):
         return reverse("note_content", kwargs={"slug": self.slug})
 
-# def slug_generator(sender, instance, *args, **kwargs):
-#     if not instance.slug:
-#         instance.slug = unique_slug_generator(instance)
+def slug_generator(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
 
-# pre_save.connect(slug_generator, sender=Note)
+pre_save.connect(slug_generator, sender=Note)
 
 class sub_Note(models.Model):
     note = models.ForeignKey(Note, on_delete=models.CASCADE)
