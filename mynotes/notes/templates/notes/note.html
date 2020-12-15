@@ -17,27 +17,31 @@
             <p class="card-text">{{ note.note_field }} </p>
             <p>Posted on: {{ note.added_date }} </p>
             <div class="row container-fluid">
-                <a class="btn btn-primary" href="{% url 'update_note' note.id %}">Edit</a>
-                <form action="{% url 'note_content' note.id %}" method="POST">
+                <a class="btn btn-primary" href="{% url 'update_note' note.slug %}">Edit</a>
+                <form action="{% url 'note_content' note.slug %}" method="POST">
                     {% csrf_token %}
                     {{ form|crispy }}
                     <button type="submit" name="delete_note" class="btn btn-danger">Delete</button>
                 </form>
-                <a class="btn btn-success" href="{% url 'create_subNote' note.id %}">Create note</a>
+                <a class="btn btn-success" href="{% url 'create_subNote' note.slug %}">Create note</a>
             </div>
         </div>
         <div class="col-sm-8">
             <h2>Notes:</h2>
-            {% for subnote in sub_note %}
-            <div class="card" style="background-color: #e3f2fd; width: 18rem;">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <a href="{% url 'subNote_content' note.id subnote.id %}">{{ subnote.subject_text }}</a>
-                    </h2>
+            {% if not sub_note %}
+                <p>No available notes</p>
+            {% else %}
+                {% for subnote in sub_note %}
+                <div class="card" style="background-color: #e3f2fd; width: 18rem;">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <a href="{% url 'subNote_content' note.slug subnote.slug %}">{{ subnote.subject_text }}</a>
+                        </h2>
+                    </div>
                 </div>
-            </div>
-            <br>
-            {% endfor %}
+                <br>
+                {% endfor %}
+            {% endif %}
         </div>
 
     </div>

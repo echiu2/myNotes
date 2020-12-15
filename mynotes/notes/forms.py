@@ -5,6 +5,7 @@ import datetime
 class createNoteForm(forms.ModelForm):
     class Meta:
         model = Note
+        exclude=('slug',)
         fields = '__all__'
         labels = {
             'subject_text': ('Title'),
@@ -20,7 +21,6 @@ class subNoteForm(forms.ModelForm):
     class Meta:
         model = sub_Note
         fields = '__all__'
-        # fields = ['subject_text', 'added_date', 'note_field']
         labels = {
             'subject_text': ('Title'),
             'added_date': ('Date'),
