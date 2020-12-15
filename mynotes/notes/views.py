@@ -28,14 +28,15 @@ def note_list(request):
     return render(request, 'notes/note_list.html', context)
 
 @login_required(login_url="/login/")
-def note_content(request, pk):
+def note_content(request, slug):
+    print(slug)
     if request.method == "POST":
         print('yes')
-        note = Note.objects.get(id=pk)
+        note = Note.objects.get(slug=slug)
         note.delete()
         return redirect('/notes')
         
-    note = Note.objects.get(id=pk)
+    note = Note.objects.get(slug=slug)
     #query all sub notes related to Note through foreign key relationships 
     sub_note = note.sub_note_set.all()
     context = {'note': note, 'sub_note': sub_note}

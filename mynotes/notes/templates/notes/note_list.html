@@ -16,7 +16,7 @@
             <div class="card" style="background-color: #e3f2fd; width: 18rem;">
                 <div class="card-header">
                     <h2 class="card-title">
-                        <a href="{% url 'note_content' note.id %}">{{ note.subject_text }}</a>
+                        <a href="{% url 'note_content' note.slug %}">{{ note.subject_text }}</a>
                     </h2>
                 </div>
             </div>
