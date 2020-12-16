@@ -21,7 +21,7 @@
                 <form action="{% url 'note_content' note.slug %}" method="POST">
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <button type="submit" name="delete_note" class="btn btn-danger">Delete</button>
+                <button type="submit" name="delete_note" class="btn btn-danger">Delete</button>
                 </form>
                 <a class="btn btn-success" href="{% url 'create_subNote' note.slug %}">Create note</a>
             </div>

@@ -2,11 +2,15 @@ from django.db import models
 from django.conf import settings
 from datetime import datetime    
 from django.db.models.signals import pre_save
+from django.contrib.auth.models import User
 from django.urls import reverse
 from mynotes.utils import unique_slug_generator
 
 # Create your models here.
+DEFAULT_OWNER_ID = 1
+
 class Note(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_OWNER_ID)
     subject_text = models.CharField(max_length=100)
     added_date = models.DateTimeField(default=datetime.now, blank=True)
     note_field = models.TextField("My field label", null=False, blank=False, max_length=1000)

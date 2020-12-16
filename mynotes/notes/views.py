@@ -11,19 +11,19 @@ from django.contrib.auth import authenticate, login, logout
 def index(request):
     # Used for submission: Check if request was performed using HTTP:"Post" -> if so, create form
     if request.method == "POST":
-        form = createNoteForm(request.POST)
+        form = createNoteForm(request.POST, request.user)
         if form.is_valid():
             # saves a new post instance from Note data
             form.save()
 
     # Instance of form
-    form = createNoteForm()
+    form = createNoteForm(request.user)
     context = {'form':form}
     return render(request, 'notes/add_notes.html', context)
 
 @login_required(login_url="/login/")
 def note_list(request):
-    list_notes = Note.objects.all()
+    list_notes = Note.objects.filter(owner=request.user)
     context = {'list_notes': list_notes}
     return render(request, 'notes/note_list.html', context)
 
@@ -66,11 +66,12 @@ def update_note(request, slug=None):
     # Query Note object with the parameter pk (primary key)
     # note = Note.objects.get(id=pk)
     note = get_object_or_404(Note, slug=slug)
+    print(note)
     #This is to get form of the note instance with data prefilled into the form 
     # (so more like an updateNote form)
     if request.method == "POST":
         # To update, pass instance of that existing note into the noteForm with the request
-        form = createNoteForm(request.POST, instance=note)
+        form = createNoteForm(request.POST, request.user, instance=note)
         if form.is_valid():
             # update values
             note = form.save(commit=False)
@@ -78,7 +79,7 @@ def update_note(request, slug=None):
             return HttpResponseRedirect(reverse('note_content', args=(slug,)))
     else:
         # data = {'title': note.subject_text, 'date': datetime.now(), 'note': note.note_field}
-        form = createNoteForm(instance=note)
+        form = createNoteForm(request.user, instance=note)
 
     context = {'form': form, 'note': note}
     return render(request, 'notes/update_notes.html', context)
