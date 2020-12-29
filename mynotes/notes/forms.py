@@ -18,10 +18,19 @@ class createNoteForm(forms.ModelForm):
                 attrs={'placeholder': 'Enter description here'}),
         }
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        #get user keyword data 
+        user = kwargs.pop('user', None)
         super(createNoteForm, self).__init__(*args, **kwargs)
         self.fields['owner'].queryset = User.objects.filter(pk = user.id)
         self.fields['owner'].disabled = True
+
+    # def save(self, commit=True):
+    #     instance = super(createNoteForm, self).save(commit=False)
+    #     instance.subject_text = self.cleaned_data['subject_text'] # etc
+    #     if commit:
+    #         instance.save()
+    #     return instance
 
 class subNoteForm(forms.ModelForm):
     class Meta:

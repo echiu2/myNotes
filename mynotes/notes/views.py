@@ -70,8 +70,8 @@ def update_note(request, slug=None):
     #This is to get form of the note instance with data prefilled into the form 
     # (so more like an updateNote form)
     if request.method == "POST":
-        # To update, pass instance of that existing note into the noteForm with the request
-        form = createNoteForm(request.POST, request.user, instance=note)
+        # To update, pass instance of that existing note into the noteForm with the request and pass user data
+        form = createNoteForm(request.POST, user=request.user, instance=note)
         if form.is_valid():
             # update values
             note = form.save(commit=False)
@@ -79,7 +79,7 @@ def update_note(request, slug=None):
             return HttpResponseRedirect(reverse('note_content', args=(slug,)))
     else:
         # data = {'title': note.subject_text, 'date': datetime.now(), 'note': note.note_field}
-        form = createNoteForm(request.user, instance=note)
+        form = createNoteForm(user=request.user, instance=note)
 
     context = {'form': form, 'note': note}
     return render(request, 'notes/update_notes.html', context)
