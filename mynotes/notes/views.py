@@ -11,13 +11,13 @@ from django.contrib.auth import authenticate, login, logout
 def index(request):
     # Used for submission: Check if request was performed using HTTP:"Post" -> if so, create form
     if request.method == "POST":
-        form = createNoteForm(request.POST, request.user)
+        form = createNoteForm(request.POST, user=request.user)
         if form.is_valid():
             # saves a new post instance from Note data
             form.save()
 
     # Instance of form
-    form = createNoteForm(request.user)
+    form = createNoteForm(user=request.user)
     context = {'form':form}
     return render(request, 'notes/add_notes.html', context)
 
@@ -30,13 +30,11 @@ def note_list(request):
 @login_required(login_url="/login/")
 def note_content(request, slug):
     if request.method == "POST":
-        print('yes')
         note = Note.objects.get(slug=slug)
         note.delete()
         return redirect('/notes')
         
     note = Note.objects.get(slug=slug)
-    print(slug)
     #query all sub notes related to Note through foreign key relationships 
     sub_note = note.sub_note_set.all()
     context = {'note': note, 'sub_note': sub_note}
@@ -57,6 +55,10 @@ def create_subNote(request, slug=None):
 
 @login_required(login_url="/login/")
 def subNote_content(request, slug=None, slug2=None):
+    if request.method == "POST":
+        subNote = sub_Note.objects.get(slug=slug2)
+        subNote.delete()
+        return redirect('/notes')
     subNote = sub_Note.objects.get(slug=slug2)
     context = {'subNote': subNote}
     return render(request, 'notes/subNote.html', context)
@@ -66,7 +68,6 @@ def update_note(request, slug=None):
     # Query Note object with the parameter pk (primary key)
     # note = Note.objects.get(id=pk)
     note = get_object_or_404(Note, slug=slug)
-    print(note)
     #This is to get form of the note instance with data prefilled into the form 
     # (so more like an updateNote form)
     if request.method == "POST":
@@ -84,5 +85,28 @@ def update_note(request, slug=None):
     context = {'form': form, 'note': note}
     return render(request, 'notes/update_notes.html', context)
 
+@login_required(login_url="/login/")
+def update_subNote(request, slug=None):
+    # Query Note object with the parameter pk (primary key)
+    # note = Note.objects.get(id=pk)
+    subnote = get_object_or_404(sub_Note, slug=slug)
+    note = get_object_or_404(Note, subject_text=subnote.note)
+    #This is to get form of the note instance with data prefilled into the form 
+    # (so more like an updateNote form)
+    if request.method == "POST":
+        # To update, pass instance of that existing note into the noteForm with the request and pass user data
+        form = subNoteForm(request.POST, user=request.user, instance=subnote)
+        if form.is_valid():
+            # update values
+            subnote = form.save(commit=False)
+            subnote.save()
+            print('yes')
+            return HttpResponseRedirect(reverse('subNote_content', args=(note.slug,slug,)))
+    else:
+        # data = {'title': note.subject_text, 'date': datetime.now(), 'note': note.note_field}
+        form = subNoteForm(user=request.user, instance=subnote)
+
+    context = {'form': form, 'subNote': subnote}
+    return render(request, 'notes/update_notes.html', context)
 
 

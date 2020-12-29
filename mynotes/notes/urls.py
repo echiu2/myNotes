@@ -9,4 +9,5 @@ urlpatterns = [
     path('notes/<slug:slug>/create_subNote/', views.create_subNote, name='create_subNote'),
     path('notes/<slug:slug>/update_note/', views.update_note, name='update_note'),
     path('notes/<slug:slug>/<slug:slug2>/', views.subNote_content, name='subNote_content'),
+    path('notes/<slug:slug>/update_subnote', views.update_subNote, name='update_subNote'),
 ]

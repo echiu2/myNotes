@@ -15,6 +15,14 @@
         <h2 >{{ subNote.subject_text }}</h2>
         <p class="card-text">{{ subNote.note_field }} </p>
         <p>Posted on: {{ subNote.added_date }} </p>
+        <div class="row container-fluid">
+            <a class="btn btn-primary" href="{% url 'update_subNote' subNote.slug %}">Edit</a>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+            <button type="submit" name="delete_subnote" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>
